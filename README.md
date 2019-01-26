@@ -15,6 +15,6 @@ $ pip3 install proxy-fn
 ## Usage
 
 ``` python
-import proxy-fn
+import proxy_fn
 ```
 
