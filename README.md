@@ -1,20 +1,20 @@
-# Python: Common Patterns
+# Python: Functions for proxy
 
-[![PyPI Version](http://img.shields.io/pypi/v/common-patterns.svg)](https://pypi.python.org/pypi/common-patterns/)
+[![PyPI Version](http://img.shields.io/pypi/v/proxy-fn.svg)](https://pypi.python.org/pypi/proxy-fn/)
 
-Common Patterns
+Functions for proxy
 
 
 ## Installation
 
 ``` console
-$ pip3 install common-patterns
+$ pip3 install proxy-fn
 ```
 
 
 ## Usage
 
 ``` python
-import common-patterns
+import proxy-fn
 ```
 
