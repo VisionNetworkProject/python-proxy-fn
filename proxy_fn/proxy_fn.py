@@ -37,12 +37,11 @@ def requests_proxies(protocol: str = 'socks5',
     return string2requests_proxies(proxy_string)
 
 
-def line2dict(line: str, _internal: bool = False):
+def line2dict(line: str):
     """
     Convert text line to dict.
 
     :param str line: Text line
-    :param bool _internal: ...
     :return: dict
     """
     r = dict()
@@ -63,19 +62,18 @@ def line2dict(line: str, _internal: bool = False):
         cp.error('[proxy_fn] {}'.format(e))
         return None
 
-    if not _internal and not r:
+    if not r:
         cp.error('[proxy_fn] Cannot parse a proxy from string: "{}"'.format(line))
         return None
 
     return r
 
 
-def dict2string(proxy: dict, _internal: bool = False):
+def dict2string(proxy: dict):
     """
     Convert a proxy dict to string.
 
     :param dict proxy: Proxy dict
-    :param bool _internal: ...
     :return: str or None
     """
     length = len(proxy)
@@ -101,18 +99,15 @@ def dict2string(proxy: dict, _internal: bool = False):
         cp.error('[proxy_fn] {}'.format(e))
         return None
 
-    if not _internal:
-        cp.error('[proxy_fn] Cannot parse a proxy from dict: {}'.format(proxy))
-
+    cp.error('[proxy_fn] Cannot parse a proxy from dict: {}'.format(proxy))
     return None
 
 
-def dict2pyrogram_dict(proxy: dict, _internal: bool = False):
+def dict2pyrogram_dict(proxy: dict):
     """
     Convert a proxy dict for pyrogram.
 
     :param dict proxy: Proxy dict
-    :param bool _internal: ...
     :return: dict or None
     """
     try:
@@ -136,21 +131,18 @@ def dict2pyrogram_dict(proxy: dict, _internal: bool = False):
         cp.error('[proxy_fn] {}'.format(e))
         return None
 
-    if not _internal:
-        cp.error('[proxy_fn] Cannot parse a proxy from dict: {}'.format(proxy))
-
+    cp.error('[proxy_fn] Cannot parse a proxy from dict: {}'.format(proxy))
     return None
 
 
-def line2string(line: str, _internal: bool = False):
+def line2string(line: str):
     """
     Convert a text line to string.
 
     :param str line: Text line
-    :param bool _internal: ...
     :return: str or None
     """
-    return dict2string(line2dict(line, _internal=True), _internal)
+    return dict2string(line2dict(line))
 
 
 def line2requests_proxies(line: str):
@@ -160,7 +152,7 @@ def line2requests_proxies(line: str):
     :param str line: Text line
     :return: dict or None
     """
-    return string2requests_proxies(line2string(line, _internal=True))
+    return string2requests_proxies(line2string(line))
 
 
 def line2pyrogram_dict(line: str):
@@ -170,7 +162,7 @@ def line2pyrogram_dict(line: str):
     :param str line: Text line
     :return: dict or None
     """
-    return dict2pyrogram_dict(line2dict(line, _internal=True))
+    return dict2pyrogram_dict(line2dict(line))
 
 
 def dict2requests_proxies(proxy: dict):
@@ -180,7 +172,7 @@ def dict2requests_proxies(proxy: dict):
     :param dict proxy: Proxy dict
     :return: dict or None
     """
-    return string2requests_proxies(dict2string(proxy, _internal=True))
+    return string2requests_proxies(dict2string(proxy))
 
 
 def string2requests_proxies(string: str):
@@ -193,6 +185,28 @@ def string2requests_proxies(string: str):
     return {
         'http': string,
         'https': string,
+    }
+
+
+def dict2python_telegram_bot_dict(proxy: dict):
+    """
+    Convert a proxy dict for python requests.
+
+    :param dict proxy: Proxy dict
+    :return: dict or None
+    """
+    return string2python_telegram_bot_dict(dict2string(proxy))
+
+
+def string2python_telegram_bot_dict(string: str):
+    """
+    Convert a proxy string for `request_kwargs` of python-telegram-bot.
+
+    :param str string: Proxy string
+    :return: dict
+    """
+    return {
+        'proxy_url': string,
     }
 
 
@@ -247,6 +261,20 @@ def random_pyrogram_dict_from_file(path_to_file: str):
     """
     proxy = random_a_proxy_dict_from_file(path_to_file=path_to_file)
     if proxy:
-        return dict2pyrogram_dict(proxy, _internal=True)
+        return dict2pyrogram_dict(proxy)
+
+    return None
+
+
+def random_python_telegram_bot_dict_from_file(path_to_file: str):
+    """
+    Random a proxy for python-telegram-bot, from a certain file, with verification.
+
+    :param str path_to_file: /path/to/file
+    :return: dict or None
+    """
+    proxy = random_a_proxy_dict_from_file(path_to_file=path_to_file)
+    if proxy:
+        return dict2python_telegram_bot_dict(proxy)
 
     return None

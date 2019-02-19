@@ -8,7 +8,7 @@ with open('README.md', 'r') as f:
 
 setup(
     name="proxy-fn",
-    version="3.1.1",
+    version="3.1.3",
     packages=find_packages(),
 
     # metadata for upload to PyPI
